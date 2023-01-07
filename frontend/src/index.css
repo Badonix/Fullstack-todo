@@ -40,10 +40,10 @@ header a:hover {
 /* homepage */
 .home {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 1fr 3fr;
   gap: 100px;
 }
-.workout-details {
+.todo-details {
   background: #fff;
   border-radius: 4px;
   margin: 20px auto;
@@ -51,17 +51,20 @@ header a:hover {
   position: relative;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
 }
-.workout-details h4 {
+.todo-details h4 {
   margin: 0 0 10px 0;
   font-size: 1.2em;
   color: var(--primary);
 }
-.workout-details p {
-  margin: 0;
+.date {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.todo-details p {
   font-size: 0.9em;
   color: #555;
 }
-.workout-details span {
+.todo-details span {
   position: absolute;
   top: 20px;
   right: 20px;
@@ -163,4 +166,25 @@ form button:hover {
 form.signup:hover,
 form.login:hover {
   box-shadow: 7px 7px 7px 7px rgba(0, 0, 0, 0.13);
+}
+
+.description {
+  color: black;
+  font-weight: bold;
+}
+
+@media (max-width: 745px) {
+  .home {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 475px) {
+  nav span {
+    display: none;
+  }
+}
+@media (max-width: 342px) {
+  h1 {
+    font-size: 1.5em;
+  }
 }

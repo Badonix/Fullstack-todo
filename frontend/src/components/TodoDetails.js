@@ -1,16 +1,16 @@
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import { useTodosContext } from "../hooks/useTodosContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 // date fns
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
-const WorkoutDetails = ({ workout }) => {
-  const { dispatch } = useWorkoutsContext();
+const TodoDetails = ({ todo }) => {
+  const { dispatch } = useTodosContext();
   const { user } = useAuthContext();
   const handleClick = async () => {
     if (!user) {
       return;
     }
-    const response = await fetch("/api/workouts/" + workout._id, {
+    const response = await fetch("/api/todos/" + todo._id, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -19,23 +19,19 @@ const WorkoutDetails = ({ workout }) => {
     const json = await response.json();
 
     if (response.ok) {
-      dispatch({ type: "DELETE_WORKOUT", payload: json });
+      dispatch({ type: "DELETE_TODO", payload: json });
     }
   };
 
   return (
-    <div className="workout-details">
-      <h4>{workout.title}</h4>
-      <p>
-        <strong>წონა (kg): </strong>
-        {workout.load}
+    <div className="todo-details">
+      <h4>{todo.title}</h4>
+      <p className="description">
+        <strong>აღწერა: </strong>
+        {todo.description}{" "}
       </p>
-      <p>
-        <strong>მისვლა: </strong>
-        {workout.reps}
-      </p>
-      <p>
-        {formatDistanceToNow(new Date(workout.createdAt), {
+      <p className="date">
+        {formatDistanceToNow(new Date(todo.createdAt), {
           addSuffix: true,
           locale: "",
         })}
@@ -47,4 +43,4 @@ const WorkoutDetails = ({ workout }) => {
   );
 };
 
-export default WorkoutDetails;
+export default TodoDetails;

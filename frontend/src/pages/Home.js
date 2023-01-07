@@ -1,41 +1,39 @@
 import { useEffect } from "react";
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
+import { useTodosContext } from "../hooks/useTodosContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
 // components
-import WorkoutDetails from "../components/WorkoutDetails";
-import WorkoutForm from "../components/WorkoutForm";
+import TodoDetails from "../components/TodoDetails";
+import TodoForm from "../components/TodoForm";
 
 const Home = () => {
-  const { workouts, dispatch } = useWorkoutsContext();
+  const { todos, dispatch } = useTodosContext();
   const { user } = useAuthContext();
 
   useEffect(() => {
-    const fetchWorkouts = async () => {
-      const response = await fetch("/api/workouts", {
+    const fetchTodos = async () => {
+      const response = await fetch("/api/todos", {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       const json = await response.json();
 
       if (response.ok) {
-        dispatch({ type: "SET_WORKOUTS", payload: json });
+        dispatch({ type: "SET_TODOS", payload: json });
       }
     };
 
     if (user) {
-      fetchWorkouts();
+      fetchTodos();
     }
   }, [dispatch, user]);
 
   return (
     <div className="home">
-      <div className="workouts">
-        {workouts &&
-          workouts.map((workout) => (
-            <WorkoutDetails key={workout._id} workout={workout} />
-          ))}
+      <TodoForm />
+      <div className="todos">
+        {todos &&
+          todos.map((todo) => <TodoDetails key={todo._id} todo={todo} />)}
       </div>
-      <WorkoutForm />
     </div>
   );
 };
